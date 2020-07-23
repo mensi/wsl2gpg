@@ -1,0 +1,15 @@
+# IDE files
+.idea/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Build and dist
+build/
+dist/
+*.egg-info/
+
+# Virtualenv
+venv/
