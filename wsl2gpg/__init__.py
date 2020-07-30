@@ -111,7 +111,16 @@ def main():
 
     if not user:
         # Auto-detect user
-        cmd = subprocess.run(['cmd.exe', '/c', 'echo %USERNAME%'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        try:
+            cmd = subprocess.run(['cmd.exe', '/c', 'echo %USERNAME%'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        except FileNotFoundError as e:
+            # cmd.exe is likely not in $PATH, let's try to find it where it usually is...
+            if os.path.exists('/mnt/c/Windows/system32/cmd.exe'):
+                try:
+                    cmd = subprocess.run(['/mnt/c/Windows/system32/cmd.exe', '/c', 'echo %USERNAME%'],
+                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                except FileNotFoundError as e:
+                    die('cmd.exe not found, unable to automatically determine username. Please set it manually.')
         if cmd.returncode != 0:
             die('Unable to determine username, cmd.exe returned:', cmd.returncode, 'stderr:', cmd.stderr)
         user = cmd.stdout.decode('utf8').strip()

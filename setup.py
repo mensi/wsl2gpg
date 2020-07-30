@@ -5,7 +5,7 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
     name='wsl2gpg',
-    version='0.0.1',
+    version='0.0.2',
     author='Manuel Stocker',
     author_email='mensi@mensi.ch',
     description='Create UNIX sockets and proxy to the gpg4win agent',
